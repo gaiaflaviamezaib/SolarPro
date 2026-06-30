@@ -1,0 +1,11 @@
+{
+  "name": "Eiffage Demo Plant (50 kWc)",
+  "latitude": 48.8566,
+  "longitude": 2.3522,
+  "tilt": 30.0,
+  "azimuth": 180.0,
+  "installed_power_kwc": 50.0,
+  "roof_height_m": 12.0,
+  "temperature_coefficient": -0.0035,
+  "timezone": "Europe/Paris"
+}

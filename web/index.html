@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolarPro — In-Browser PV Simulator</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css" />
+  <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, sans-serif; max-width: 820px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    h1 { margin-bottom: 0.2rem; }
+    .sub { color: #666; margin-top: 0; }
+    button { padding: 0.6rem 1.1rem; font-size: 1rem; border-radius: 8px; border: 1px solid #d97706; background: #f59e0b; color: #1a1a1a; cursor: pointer; }
+    button[disabled] { opacity: 0.6; cursor: progress; }
+    pre { background: #11182722; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; }
+    .badge { display: inline-block; background: #16a34a; color: #fff; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <h1>☀️ SolarPro</h1>
+  <p class="sub">Photovoltaic prediction &amp; maintenance decision support — running entirely in your browser via PyScript + WebAssembly. <span class="badge">zero install</span></p>
+
+  <p>Click below to run the full pipeline (PVUSA calibration, degradation modelling and loss analysis) on the bundled demo plant. All computation happens client-side.</p>
+
+  <button id="run-btn" py-click="run_demo">Run demo pipeline</button>
+  <pre id="output">Loading the Python runtime…</pre>
+
+  <script type="py" config="./pyscript.toml">
+from pyodide.ffi import create_proxy
+from js import document
+import pandas as pd
+
+from solarpro.config import PlantConfig
+from solarpro import pipeline
+
+out = document.getElementById("output")
+btn = document.getElementById("run-btn")
+out.innerText = "Runtime ready. Click 'Run demo pipeline'."
+
+
+def run_demo(event=None):
+    btn.disabled = True
+    out.innerText = "Running pipeline in the browser…"
+    try:
+        plant = PlantConfig.from_json("data/sample/plant_config.json")
+        dataset = pd.read_csv("data/sample/weather_power.csv", parse_dates=["time"]).set_index("time")
+        # Ollama is a server-side feature; in-browser uses the rule-based fallback.
+        result = pipeline.run(plant, dataset, use_ollama=False)
+        lines = [
+            f"Plant: {plant.name}",
+            f"PVUSA coefficients: {result.coefficients}",
+            f"Test R²:   {result.test_metrics.r2:.3f}",
+            f"Test RMSE: {result.test_metrics.rmse:.2f} kW",
+            f"Test MAPE: {result.test_metrics.mape:.1f} %",
+            f"Quality bar (R²>0.85): {'PASS' if result.test_metrics.is_strong else 'BELOW'}",
+            "",
+            f"Loss summary: {result.loss_summary.to_dict()}",
+            "",
+            "Maintenance recommendations:",
+            result.recommendations,
+        ]
+        out.innerText = "\n".join(lines)
+    except Exception as exc:  # surface errors in the page
+        out.innerText = f"Error: {exc}"
+    finally:
+        btn.disabled = False
+  </script>
+</body>
+</html>
