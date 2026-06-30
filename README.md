@@ -177,7 +177,7 @@ ruff check .
 
 ## 📄 License
 
-[MIT](LICENSE) © 2026 Gaïa Mezaïb
+[MIT](LICENSE) © 2026 Gaïa Mezaïb, Lluc Lozano Bosch, Ibingo Kribbs
 
 <div align="center">
 <sub>Built for the 2026 Eiffage Eco Skills Challenge · <a href="https://lozanobosch.k3pler.org/">live demo</a></sub>
