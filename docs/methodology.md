@@ -57,15 +57,19 @@ factor, and rainfall above a threshold cleans the surface. The soiling ratio is
 floored at a physical minimum.
 
 - Reference: Coello & Boyle (2019), *IEEE J. Photovoltaics* 9(5).
-
+  
 ### 3d. Aggregation — TDR
 
-$$\mathrm{TDR}(t) = \mathrm{soiling\_ratio}(t)\times\mathrm{long\_term\_factor}(t)$$
+$$
+\mathrm{TDR}(t)=SR(t)\times LTF(t)
+$$
 
-`long_term_factor` combines first-year light-induced degradation (LID, ~2%) and a
-constant annual degradation rate (~0.5%/yr); the thermal and humidity
-acceleration factors modulate the *rate* of this irreversible ageing relative to
-STC. Reference for degradation rates: Jordan & Kurtz (2013).
+where:
+
+- \(SR(t)\) is the soiling ratio, representing reversible losses caused by dust, dirt, or surface deposits on the PV panels.
+- \(LTF(t)\) is the long-term degradation factor, combining first-year light-induced degradation (LID, ~2%) and annual ageing degradation (~0.5%/year).
+
+The Total Derating Ratio (TDR) is applied as a multiplicative correction factor to the predicted photovoltaic output. It combines short-term soiling losses and long-term irreversible ageing effects.
 
 ## 4. Validation metrics
 
