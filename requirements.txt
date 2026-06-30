@@ -1,0 +1,10 @@
+# Core runtime dependencies (all available in Pyodide for the in-browser build).
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+requests>=2.31
+
+# Optional: notebooks & plotting
+#   pip install -e ".[notebooks]"
+# Optional: development tooling
+#   pip install -e ".[dev]"

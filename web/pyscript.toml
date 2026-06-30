@@ -1,0 +1,13 @@
+# PyScript configuration for the in-browser SolarPro simulator.
+# These packages are resolved from the Pyodide/PyPI distribution and run
+# entirely client-side in WebAssembly — no server, no installation.
+packages = ["numpy", "pandas", "scikit-learn", "pyodide-http"]
+
+[files]
+# Mount the pure-Python core and demo data into the browser virtual filesystem.
+# Served from a local/static dev server (see README "Run the in-browser app").
+# For a production deployment, ship the core as a built wheel and load it via
+# `packages` instead of fetching individual source files.
+"../src/solarpro/" = "solarpro/"
+"../data/sample/weather_power.csv" = "data/sample/weather_power.csv"
+"../data/sample/plant_config.json" = "data/sample/plant_config.json"
