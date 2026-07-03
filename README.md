@@ -12,6 +12,7 @@
 🏆 **1st place out of 280 projects — 2026 Eiffage Eco Skills Challenge**
 
 [Live demo](https://lozanobosch.k3pler.org/) · [How it works](#-how-it-works) · [Quickstart](#-quickstart) · [Architecture](docs/architecture.md)
+https://www.linkedin.com/posts/ga%C3%AFa-meza%C3%AFb-boti-64a955327_eiffage-ecoskillschallenge-sustainability-activity-7478783024101261312-p37G?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKLVloBEnWBkhCik5HRMHzcOQfIfJ52iVk
 
 </div>
 
