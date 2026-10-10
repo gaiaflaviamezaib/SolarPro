@@ -1,17 +1,17 @@
 <div align="center">
 
-# ☀️ SolarPro
+# SolarPro
 
-**AI-powered decision support for photovoltaic performance — predict production, diagnose losses, and plan maintenance.**
+**AI-powered decision support for photovoltaic performance: predict production, diagnose losses, and plan maintenance.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Runs in browser](https://img.shields.io/badge/Runs%20in-Browser%20(PyScript%2FWASM)-orange.svg)](https://lozanobosch.k3pler.org/)
 [![Demo](https://img.shields.io/badge/Live-Demo-success.svg)](https://lozanobosch.k3pler.org/)
 
-🏆 **1st place out of 280 projects — 2026 Eiffage Eco Skills Challenge**
+1st place out of 280 projects, 2026 Eiffage Eco Skills Challenge
 
-[Live demo](https://lozanobosch.k3pler.org/) · [How it works](#-how-it-works) · [Quickstart](#-quickstart) · [Architecture](docs/architecture.md)
+[Live demo](https://lozanobosch.k3pler.org/) · [How it works](#how-it-works) · [Quickstart](#quickstart) · [Architecture](docs/architecture.md)
 · [LinkedIn Post](https://www.linkedin.com/posts/ga%C3%AFa-meza%C3%AFb-boti-64a955327_eiffage-ecoskillschallenge-sustainability-activity-7478783024101261312-p37G?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKLVloBEnWBkhCik5HRMHzcOQfIfJ52iVk)
 
 </div>
@@ -31,25 +31,25 @@ physical degradation mechanisms behind them, and produces plain-language
 maintenance recommendations.
 
 Unlike traditional monitoring dashboards that only visualize the past, SolarPro
-focuses on **prediction and decision support** — helping users anticipate and
+focuses on **prediction and decision support**, helping users anticipate and
 recover losses.
 
 ### What makes it different
 
-- 🌐 **Runs entirely in the browser** via **PyScript + WebAssembly** — advanced
+- **Runs entirely in the browser** via **PyScript + WebAssembly**: advanced
   Python computation client-side, zero installation, usable on a tablet on-site.
-- 🔬 **Physics-grounded, not a black box** — the empirical **PVUSA** model plus
+- **Physics-grounded, not a black box**: the empirical **PVUSA** model plus
   **multi-physics degradation** (Arrhenius, Hallberg-Peck, HSU soiling).
-- 🤖 **AI maintenance assistant** — an open-source LLM via **Ollama** translates
+- **AI maintenance assistant**: an open-source LLM via **Ollama** translates
   the numerical diagnosis into prioritized actions.
-- ♻️ **Decision support** — quantifies recoverable energy and CO₂ to prioritize
+- **Decision support**: quantifies recoverable energy and CO₂ to prioritize
   interventions.
 
 > The same dependency-light Python core runs **both** as an importable library
-> (this repo, notebooks, tests) **and** in the browser via Pyodide — one codebase,
+> (this repo, notebooks, tests) **and** in the browser via Pyodide: one codebase,
 > two delivery modes.
 
-## ✨ Features
+## Features
 
 | Capability | Module |
 |---|---|
@@ -62,7 +62,7 @@ recover losses.
 | Performance-loss & anomaly analysis | [`losses.py`](src/solarpro/losses.py) |
 | AI maintenance recommendations (Ollama, graceful fallback) | [`recommendations.py`](src/solarpro/recommendations.py) |
 
-## 🔄 How it works
+## How it works
 
 SolarPro runs a six-stage pipeline:
 
@@ -77,32 +77,32 @@ flowchart LR
 ```
 
 1. **Configure** the installation (location, tilt, azimuth, installed kWc, panel specs).
-2. **Retrieve** hourly weather — irradiance (GTI), temperature, wind, humidity, precipitation.
+2. **Retrieve** hourly weather: irradiance (GTI), temperature, wind, humidity, precipitation.
 3. **Calibrate** PVUSA coefficients on *training data only* with robust **Huber regression**.
 4. **Predict** the healthy production baseline across all periods.
 5. **Validate** on a held-out test set (quality bar: **R² > 0.85**).
-6. **Diagnose** — model degradation (TDR), flag anomalies, and generate recommendations.
+6. **Diagnose**: model degradation (TDR), flag anomalies, and generate recommendations.
 
 See [`docs/methodology.md`](docs/methodology.md) for the model equations and references.
 
-## 🧪 Sample results
+## Sample results
 
 Running the bundled demo (`python -m solarpro`) on the included **synthetic**
-50 kWc plant — two years of hourly data with an injected 5-week string fault:
+50 kWc plant: two years of hourly data with an injected 5-week string fault:
 
 | Metric | Value |
 |---|---|
-| Test R² | **0.96** ✅ (clears the 0.85 bar) |
+| Test R² | **0.96** (clears the 0.85 bar) |
 | Test MAPE | 4.2 % |
 | Anomaly hours detected | 5.4 % (matches the injected fault window) |
 | Recoverable energy flagged | ~1,390 kWh |
 
 > At the competition, SolarPro was presented as avoiding **~825 kWh/year** of
 > losses on a standard 50 kWc Eiffage installation. The bundled dataset here is
-> **synthetic, for demonstration and reproducibility** — plug in your own
+> **synthetic, for demonstration and reproducibility**. Plug in your own
 > Open-Meteo location and production history for real results.
 
-## 🚀 Quickstart
+## Quickstart
 
 ```bash
 # 1. Clone & install
@@ -130,7 +130,7 @@ python -m http.server --directory web 8000
 # open http://localhost:8000  → click "Run demo pipeline" (runs in WASM)
 ```
 
-## 🗂️ Project structure
+## Project structure
 
 ```
 SolarPro/
@@ -150,16 +150,16 @@ SolarPro/
 └── docs/                 # Architecture & methodology
 ```
 
-## 💼 Product model (context)
+## Product model (context)
 
-SolarPro's pricing follows its architecture — *what is free to run is free to use;
+SolarPro's pricing follows its architecture: *what is free to run is free to use;
 what needs a server is paid*:
 
-- **Solo** — free, local, single user.
-- **Team** — cloud, includes the AI assistant; for operators of 5–50 plants.
-- **Portfolio** — on-premise deployment with a dedicated SLA for large operators.
+- **Solo**: free, local, single user.
+- **Team**: cloud, includes the AI assistant; for operators of 5–50 plants.
+- **Portfolio**: on-premise deployment with a dedicated SLA for large operators.
 
-## 📚 References
+## References
 
 - Dows & Gough (1995), *PVUSA Procurement, Acceptance and Rating Practices*.
 - Skoplaki & Palyvos (2009), *Operating temperature of PV modules*, Renewable Energy.
@@ -168,7 +168,7 @@ what needs a server is paid*:
 - Jordan & Kurtz (2013), *Photovoltaic Degradation Rates — An Analytical Review*, Prog. Photovoltaics.
 - Weather data: [Open-Meteo](https://open-meteo.com/).
 
-## 🛠️ Development
+## Development
 
 ```bash
 pip install -e ".[dev]"
@@ -176,7 +176,7 @@ pytest
 ruff check .
 ```
 
-## 📄 License
+## License
 
 [MIT](LICENSE) © 2026 Gaïa Mezaïb, Lluc Lozano Bosch, Ibingo Kribbs
 
