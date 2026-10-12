@@ -122,7 +122,7 @@ def run(
     operating["tdr"] = tdr["tdr"]
 
     # Stage 6b: loss analysis vs. measured (PVUSA baseline; TDR kept as diagnostic).
-    loss_frame, loss_summary = analyze_losses(
+    _loss_frame, loss_summary = analyze_losses(
         operating["clean_power"], operating["power"]
     )
 

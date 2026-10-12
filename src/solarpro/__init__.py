@@ -13,4 +13,4 @@ from solarpro.config import ModelConfig, PlantConfig
 
 __version__ = "0.1.0"
 
-__all__ = ["PlantConfig", "ModelConfig", "__version__"]
+__all__ = ["ModelConfig", "PlantConfig", "__version__"]

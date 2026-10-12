@@ -9,7 +9,7 @@ is hard-coded into the physics.
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 
@@ -40,7 +40,7 @@ class PlantConfig:
     timezone: str = "auto"
 
     @classmethod
-    def from_json(cls, path: str | Path) -> "PlantConfig":
+    def from_json(cls, path: str | Path) -> PlantConfig:
         """Load a plant configuration from a JSON file (pipeline stage 1)."""
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         known = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
@@ -87,7 +87,7 @@ class ModelConfig:
     overrides: dict = field(default_factory=dict)
 
     @classmethod
-    def from_json(cls, path: str | Path) -> "ModelConfig":
+    def from_json(cls, path: str | Path) -> ModelConfig:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         known = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
         return cls(**{k: v for k, v in data.items() if k in known})
