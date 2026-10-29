@@ -40,10 +40,18 @@ def remove_outliers_iqr(series: pd.Series, k: float = 1.5) -> pd.Series:
     return series.where((series >= lower) & (series <= upper))
 
 
+def _window_mad(values: np.ndarray) -> float:
+    return float(np.nanmedian(np.abs(values - np.nanmedian(values))))
+
+
 def hampel_filter(series: pd.Series, window: int = 11, n_sigma: float = 3.0) -> pd.Series:
     """Hampel filter: replace points that deviate > n_sigma MADs from the local median."""
-    rolling_median = series.rolling(window, center=True, min_periods=1).median()
-    mad = (series - rolling_median).abs().rolling(window, center=True, min_periods=1).median()
+    rolling = series.rolling(window, center=True, min_periods=1)
+    rolling_median = rolling.median()
+    # MAD of each window around that window's own median. (Taking each point's
+    # distance to its own median and then smoothing gives ~0 on any smooth
+    # slope, which clipped daily irradiance peaks.)
+    mad = rolling.apply(_window_mad, raw=True)
     threshold = n_sigma * 1.4826 * mad  # 1.4826 scales MAD to std for normal data
     diff = (series - rolling_median).abs()
     return series.where(diff <= threshold, rolling_median)
@@ -74,6 +82,15 @@ def clean(frame: pd.DataFrame, roof_height_m: float) -> pd.DataFrame:
     out = frame.copy()
     out["wind_speed"] = correct_wind_speed(out["wind_speed"], roof_height_m)
     for column in ("gti", "temp_air", "wind_speed"):
-        if column in out:
-            out[column] = hampel_filter(remove_outliers_iqr(out[column]))
+        if column not in out:
+            continue
+        values = out[column]
+        if column == "gti":
+            # About half the hours are night zeros, which would put Q3 so low
+            # that every sunny hour looks like an outlier. Use daylight only.
+            day = values > 0
+            values = values.where(~day, remove_outliers_iqr(values[day]))
+        else:
+            values = remove_outliers_iqr(values)
+        out[column] = hampel_filter(values)
     return out.dropna(subset=[c for c in ("gti", "temp_air", "wind_speed") if c in out])
