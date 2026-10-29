@@ -92,10 +92,10 @@ Running the bundled demo (`python -m solarpro`) on the included **synthetic**
 
 | Metric | Value |
 |---|---|
-| Test R² | **0.96** (clears the 0.85 bar) |
-| Test MAPE | 4.2 % |
-| Anomaly hours detected | 5.4 % (matches the injected fault window) |
-| Recoverable energy flagged | ~1,390 kWh |
+| Test R² | **0.95** (clears the 0.85 bar) |
+| Test MAPE | 4.0 % |
+| Anomaly hours detected | 5.2 % (87 % of them inside the injected fault window) |
+| Recoverable energy flagged | ~1,330 kWh |
 
 > At the competition, SolarPro was presented as avoiding **~825 kWh/year** of
 > losses on a standard 50 kWc Eiffage installation. The bundled dataset here is
